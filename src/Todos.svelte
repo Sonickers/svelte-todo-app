@@ -1,13 +1,6 @@
 <script>
   import TodoItem from "./TodoItem.svelte";
 
-  $: todosRemaining = filteredTodos.filted((todo) => !todo.completed).length;
-  $: filteredTodos =
-    currentFilter === "all"
-      ? todos
-      : currentFilter === "completed"
-      ? todos.filteredTodos((todo) => todo.compelted)
-      : todos.filteredTodos((todo) => !todo.compelted);
   let newTodoTitle = "";
   let currentFilter = "all";
   let nextId = 4;
@@ -28,6 +21,15 @@
       compelted: false,
     },
   ];
+
+  $: todosRemaining = filteredTodos.filter((todo) => !todo.completed).length;
+  $: filteredTodos =
+    currentFilter === "all"
+      ? todos
+      : currentFilter === "completed"
+      ? todos.filteredTodos((todo) => todo.compelted)
+      : todos.filteredTodos((todo) => !todo.compelted);
+
   function addTodo(event) {
     if (event.key === "Enter") {
       todos = [
@@ -43,6 +45,12 @@
       newTodoTitle = "";
     }
   }
+  function checkAllTodos(event) {
+    todos.forEach(todo => todo.compelted = event.target.checked);
+    todos = todos;
+  }
+  function handleDeleteTodo() {}
+  function handleToggleComplete() {}
 </script>
 
 <div>
