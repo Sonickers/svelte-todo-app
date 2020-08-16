@@ -27,8 +27,8 @@
     currentFilter === "all"
       ? todos
       : currentFilter === "completed"
-      ? todos.filteredTodos((todo) => todo.compelted)
-      : todos.filteredTodos((todo) => !todo.compelted);
+      ? todos.filter((todo) => todo.compelted)
+      : todos.filter((todo) => !todo.compelted);
 
   function addTodo(event) {
     if (event.key === "Enter") {
@@ -55,8 +55,21 @@
   function clearCompleted() {
     todos = todos.filter((todo) => !todo.compelted);
   }
-  function handleDeleteTodo() {}
-  function handleToggleComplete() {}
+  function handleDeleteTodo(event) {
+    todos = todos.filter((todo) => todo.id !== event.detail.id);
+  }
+  function handleToggleComplete(event) {
+    const todoIndex = todos.findIndex((todo) => todo.id === event.detail.id);
+    const updatedTodo = {
+      ...todos[todoIndex],
+      completed: !todos[todoIndex].completed,
+    };
+    todos = [
+      ...todos.slice(0, todoIndex),
+      updatedTodo,
+      ...todos.slice(todoIndex + 1),
+    ];
+  }
 </script>
 
 <style>
@@ -66,7 +79,9 @@
   }
   .logo {
     display: block;
-    margin: 20px auto;
+    height: 150px;
+    margin-left: auto;
+    margin-right: auto;
     width: 50%;
   }
   .todo-input {
@@ -103,11 +118,8 @@
   }
 </style>
 
-<div>
-  <a href="https://codingthesmartway.com" target="_blank">
-    <img src={'/img/CTSWLogo.png'} alt="svelte logo" class="logo" />
-  </a>
-  <h2>Svelte Todo App</h2>
+<div class="container">
+  <img src={'/img/logo.png'} alt="svelte logo" class="logo" />
   <input
     type="text"
     class="todo-input"
