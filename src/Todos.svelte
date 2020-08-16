@@ -52,6 +52,9 @@
   function updateFilter (newFilter) {
     currentFilter = newFilter;
   }
+  function clearCompleted() {
+    todos = todos.filter(todo => !todo.compelted);
+  }
   function handleDeleteTodo() {}
   function handleToggleComplete() {}
 </script>
