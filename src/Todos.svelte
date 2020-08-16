@@ -49,6 +49,9 @@
     todos.forEach(todo => todo.compelted = event.target.checked);
     todos = todos;
   }
+  function updateFilter (newFilter) {
+    currentFilter = newFilter;
+  }
   function handleDeleteTodo() {}
   function handleToggleComplete() {}
 </script>
