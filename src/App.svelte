@@ -1,7 +1,15 @@
 <script>
-	import Todos from './Todos.svelte'
+  import Todos from "./Todos.svelte";
 </script>
 
+<style>
+	.container {
+		background-color: #EBEDF1;
+	}
+</style>
+
 <main>
-	<Todos/>
+  <div class="container">
+    <Todos />
+  </div>
 </main>

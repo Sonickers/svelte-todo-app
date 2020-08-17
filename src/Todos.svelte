@@ -1,10 +1,17 @@
 <script>
   import TodoItem from "./TodoItem.svelte";
+  import { time } from './stores.js'
 
   let newTodoTitle = "";
   let currentFilter = "all";
   let nextId = 4;
   let todos = [];
+  const formatter = new Intl.DateTimeFormat("en", {
+    hour12: true,
+    hour: "numeric",
+    minute: "2-digit",
+    second: "2-digit",
+  });
 
   $: todosRemaining = filteredTodos.filter((todo) => !todo.completed).length;
   $: filteredTodos =
@@ -88,37 +95,41 @@
   .inner-container-input {
     margin-right: 12px;
   }
+  .time-text {
+    color: #59646F;
+  }
   button {
     font-size: 14px;
     background-color: white;
     appearance: none;
     border-radius: 8px;
-    border-color: darkgoldenrod;
+    border-color: transparent;
   }
   button:hover {
-    background: #FAF1CF;
+    background: #faf1cf;
   }
   button:focus {
     outline: none;
   }
   .active {
-    background: #FAF1CF;
+    background: #faf1cf;
   }
   .circle {
-  height: 100px;
-  width: 100px;
-  background-color: #bbb;
-  border-radius: 50%;
-  display: inline-block;
-  text-align: center;
-}
+    height: 100px;
+    width: 100px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    text-align: center;
+  }
 </style>
 
 <div class="container">
   <div class="title-logo-container">
     <div class="circle">
-    <img src={'/img/strategic-plan.svg'} alt="svelte logo" class="logo" />
-  </div>
+      <img src={'/img/strategic-plan.svg'} alt="svelte logo" class="logo" />
+    </div>
+    <h1 class="time-text">The time is {formatter.format($time)}</h1>
   </div>
   <input
     type="text"
@@ -136,11 +147,11 @@
   {/each}
   <div class="inner-container">
     <div>
-        <input
-          class="inner-container-input"
-          type="checkbox"
-          on:change={checkAllTodos} />
-        All Done!
+      <input
+        class="inner-container-input"
+        type="checkbox"
+        on:change={checkAllTodos} />
+      All Done!
     </div>
     <div>{todosRemaining} items left</div>
   </div>
