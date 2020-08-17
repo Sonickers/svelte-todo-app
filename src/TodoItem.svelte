@@ -37,7 +37,7 @@
         align-items: center;
     }
     .todo-item-label {
-        border: 1px solid white;
+        border: 1px solid transparent;
         margin-left: 12px;
     }
     .completed {
