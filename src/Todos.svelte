@@ -65,7 +65,8 @@
 
 <style>
   .container {
-    max-width: 800px;
+    max-width: 500px;
+    height: 100%;
     margin: 10px auto;
   }
   .title-logo-container {
@@ -132,9 +133,9 @@
     <h1 class="time-text">The time is {formatter.format($time)}</h1>
   </div>
   <input
-    type="text"
+    type="date"
     class="todo-input"
-    placeholder="Insert todo item ..."
+    placeholder="What should we do?"
     bind:value={newTodoTitle}
     on:keydown={addTodo} />
   {#each filteredTodos as todo}
