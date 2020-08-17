@@ -4,31 +4,15 @@
   let newTodoTitle = "";
   let currentFilter = "all";
   let nextId = 4;
-  let todos = [
-    {
-      id: 1,
-      title: "First todo",
-      compelted: false,
-    },
-    {
-      id: 2,
-      title: "Second todo",
-      compelted: false,
-    },
-    {
-      id: 3,
-      title: "Third todo",
-      compelted: false,
-    },
-  ];
+  let todos = [];
 
   $: todosRemaining = filteredTodos.filter((todo) => !todo.completed).length;
   $: filteredTodos =
     currentFilter === "all"
       ? todos
       : currentFilter === "completed"
-      ? todos.filter((todo) => todo.compelted)
-      : todos.filter((todo) => !todo.compelted);
+      ? todos.filter((todo) => todo.completed)
+      : todos.filter((todo) => !todo.completed);
 
   function addTodo(event) {
     if (event.key === "Enter") {
@@ -46,14 +30,14 @@
     }
   }
   function checkAllTodos(event) {
-    todos.forEach((todo) => (todo.compelted = event.target.checked));
+    todos.forEach((todo) => (todo.completed = event.target.checked));
     todos = todos;
   }
   function updateFilter(newFilter) {
     currentFilter = newFilter;
   }
   function clearCompleted() {
-    todos = todos.filter((todo) => !todo.compelted);
+    todos = todos.filter((todo) => !todo.completed);
   }
   function handleDeleteTodo(event) {
     todos = todos.filter((todo) => todo.id !== event.detail.id);
@@ -77,26 +61,28 @@
     max-width: 800px;
     margin: 10px auto;
   }
+  .title-logo-container {
+    padding: 35px 0;
+  }
   .logo {
     display: block;
-    height: 150px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
+    margin-left: 30%;
+    margin-top: 30%;
+    height: 50%;
   }
   .todo-input {
     width: 100%;
     padding: 10px, 20px;
     font-size: 18px;
     margin-bottom: 20px;
+    border-radius: 8px;
   }
   .inner-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
     font-size: 16px;
-    border-top: 1px solid lightgrey;
-    padding-top: 15px;
+    padding-top: 30px;
     margin-bottom: 13px;
   }
   .inner-container-input {
@@ -106,20 +92,34 @@
     font-size: 14px;
     background-color: white;
     appearance: none;
+    border-radius: 8px;
+    border-color: darkgoldenrod;
   }
   button:hover {
-    background: lightseagreen;
+    background: #FAF1CF;
   }
   button:focus {
     outline: none;
   }
   .active {
-    background: lightseagreen;
+    background: #FAF1CF;
   }
+  .circle {
+  height: 100px;
+  width: 100px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  text-align: center;
+}
 </style>
 
 <div class="container">
-  <img src={'/img/logo.png'} alt="svelte logo" class="logo" />
+  <div class="title-logo-container">
+    <div class="circle">
+    <img src={'/img/strategic-plan.svg'} alt="svelte logo" class="logo" />
+  </div>
+  </div>
   <input
     type="text"
     class="todo-input"
@@ -136,13 +136,11 @@
   {/each}
   <div class="inner-container">
     <div>
-      <label>
         <input
           class="inner-container-input"
           type="checkbox"
           on:change={checkAllTodos} />
-        Check All
-      </label>
+        All Done!
     </div>
     <div>{todosRemaining} items left</div>
   </div>
